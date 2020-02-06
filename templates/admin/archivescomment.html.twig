@@ -1,0 +1,50 @@
+ {% extends './adminlayout.html.twig' %}
+{% block content %}
+
+{# Affichage des commentaires archivés #}
+
+<div class="row" id="thumbnails_container">
+
+{# Les commentaires archivés s'afficheront #}
+                    {% for commentaire in commentaire %}
+                    {% if commentaire.del == 1 %}
+                    
+					
+						   
+						    <div class="col-lg-12 col-white">
+						<div class="col-lg-2 col-xs-2 col-sm-2">
+
+							<p class="auteur"><a href="{{ path('contenu', {'username': commentaire.username.username}) }}" class="auteur">{{ commentaire.username.username }}</a></p><br>
+							<p class="date">Ajouté le {{ commentaire.date | date('d/m/Y') }}</p><br>
+							
+						</div>
+
+						<div class="col-lg-8 col-xs-8 col-sm-8">
+							<p class="article comment">{{ commentaire.texte }}</p>
+						</div>
+						<div class="col-lg-2 col-xs-2 col-sm-2">
+						 {% if commentaire.signalement > 0 %}
+								<i class="fa fa-warning red right"></i>
+							{% endif %}
+						</div>
+					</div>
+
+					<div class="cleaner"></div>
+
+                    {% endif %}
+                    {% endfor %}
+
+                    <div class="cleaner"></div>
+
+				<div class="col-xs-12 col-md-12">
+				{# Pagination #}
+                	<div class="article">
+					{{ knp_pagination_render(commentaire) }}
+					</div>
+			  	</div>
+
+			</div> <!-- thumbnail area -->  
+		</div>
+
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends '/layout.html.twig' %}
+{% block content %}
+
+{# Compte de l'utilisateur #}
+
+{# Utilisateur non banni, affichage des options de compte #}
+{% if app.user and app.user.roles != ["ROLE_BANNI"] %}
+	
+
+<div class="row" id="thumbnails_container">            
+				<div class="col-md-12 col-black">
+					<h2>{{title}} {{ app.user.username }}</h2>
+
+
+					<p class="article">Que veux-tu faire?<br><br>
+						<a class="white" href="{{ path('newtext') }}">Ajouter un texte</a><br>
+						<a class="white" href="{{ path('newvideo') }}">Ajouter une vidéo</a><br>
+						<a class="white" href="{{ path('gestioncontent') }}">Modifier un texte</a><br>
+						<a class="white" href="{{ path('gestionvideo') }}">Modifier une vidéo</a><br>
+						<a class="white" href="{{ path('mycomment') }}">Voir tes commentaires</a><br>
+						<a class="white" href="{{ path('password') }}">Modifier ton mot de passe</a><br>
+						<a class="white" href="{{ path('deconnexion') }}">Se déconnecter</a>
+					</p>
+				</div>
+
+			</div> <!-- thumbnail area -->  
+		</div>
+
+		{# Utilisateur banni, refus de droit d'accès à son compte #}
+{% elseif app.user and app.user.roles == ['ROLE_BANNI'] %}
+<div class="row" id="thumbnails_container">            
+				<div class="col-md-12 col-black">
+					<h2>{{title}}</h2>
+					<p class="article">Suite à un problème avec vos publications, vous ne pourrez plus poster que ce soit des commentaires ou des creepypastas. Néanmoins, vous pouvez toujours accéder au contenu des autres et lire les commentaires.</p>
+					<a class="white" href="{{ path('deconnexion') }}">Se déconnecter</a>
+				</div>
+</div>
+	
+	{# Si non utilisateur, erreur #}
+{% else %}
+<div class="row" id="thumbnails_container">            
+	<div class="col-md-12 col-black">
+		<h2>Hey, il y a un problème</h2> 
+		<p class="article">Il semble que vous n'avez pas accès à cette page</p>
+		<a class="white" href="{{ path('connexion') }}">Se connecter</a>
+	</div> <!-- thumbnail area -->  
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends '/layout.html.twig' %}
+{% block content %}
+
+<div class="row" id="thumbnails_container">
+
+{# retour à la page précédente (page textes) #}
+<div class="header">
+<a class="white bottom" href="{{ path('textes') }}">Retour en arrière</a>
+</div>
+<div class="cleaner"></div>
+
+{# Affichage des textes s'ils ne sont pas archivés #}
+{% for texte in textes %}
+{% if texte.del == 0 %}
+
+<div class="col-md-12 col-black">
+					<div class="col-md-12 col-red">
+						<p><a class="auteur" href="{{ path('contenu', {'username': texte.username.username}) }}">{{ texte.username.username }}</a></p>
+						<h2 class="title">{{ texte.titre }}</h2>
+					</div>
+
+					<div class="cleaner"></div>
+					<p class="date">Ajouté le {{ texte.date | date('d/m/Y') }}</p>
+					<div class="cleaner"></div>
+					<p class="article">{{ texte.description | raw }} <a class="red" href="{{ path('texttarget', {'id': texte.id}) }}">...Lire la suite</a>
+					</p>
+				</div>
+				<div class="cleaner"></div>
+{% endif %}
+{% endfor %}
+
+				
+</div> <!-- thumbnail area -->  
+		</div>
+{% endblock %}

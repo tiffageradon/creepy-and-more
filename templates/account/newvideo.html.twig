@@ -1,0 +1,56 @@
+{% extends '/layout.html.twig' %}
+{% block content %}
+
+{# Nouvelle vidéo #}
+
+{# Si utilisateur non banni, affichage du formulaire #}
+{% if app.user and app.user.roles != ["ROLE_BANNI"] %} 
+
+<div class="row" id="thumbnails_container">
+
+				<a class="white bottom" href="{{ path('compteaccueil') }}">Retour en arrière</a>
+
+				<div class="col-md-12 col-black">
+					<h3>Ajouter une vidéo</h3>
+					<p class="article">
+					Laisse une description accrocheuse de ta creepypasta, c'est elle qui est présente en premier dans les textes et sur la page home. <br>
+					Pour laisser un URL de youtube, sélectionnez la vidéo puis, cliquez sur partager puis, sur intégrer, copier le lien indiqué dans src. </p>
+					
+					{{ form_start(formVideo) }}
+
+					{{ form_row(formVideo.titre) }}
+					{{ form_row(formVideo.description) }}
+					{{ form_row(formVideo.url) }}
+					
+					<button type="submit" class="btn btn-primary btn-right">Envoyer</button>
+						<div class="cleaner"></div>
+					{{ form_end(formVideo) }}
+
+				</div>	
+
+			</div> <!-- thumbnail area -->  
+		</div>
+
+{# Si banni, affichage du bannissement #}
+		{% elseif app.user and app.user.roles == ['ROLE_BANNI'] %}
+<div class="row" id="thumbnails_container">            
+				<div class="col-md-12 col-black">
+					<h2>{{title}}</h2>
+					<p class="article">Suite à un problème avec vos publications, vous ne pourrez plus poster que ce soit des commentaires ou des creepypastas. Néanmoins, vous pouvez toujours accéder au contenu des autres et lire les commentaires.</p>
+					<a class="white" href="{{ path('deconnexion') }}">Se déconnecter</a>
+				</div>
+</div>
+		      
+{# Si non connecté, erreur #}
+		{% else %}
+<div class="row" id="thumbnails_container">            
+    <div class="col-md-12 col-black">
+        <h2>Hey, il y a un problème</h2> 
+        <p class="article">Il semble que vous n'avez pas accès à cette page</p>
+        <a class="white" href="{{ path('connexion') }}">Se connecter</a>
+    </div> <!-- thumbnail area -->  
+</div>
+{% endif %}
+
+
+{% endblock %}

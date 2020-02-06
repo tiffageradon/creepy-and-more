@@ -1,0 +1,111 @@
+{% extends '/layout.html.twig' %}
+{% block content %}
+
+{# Vidéo cible du lien #}
+<div class="row" id="thumbnails_container">
+
+				<div class="cleaner"></div>
+
+				{# Affichage de la vidéo si elle n'est pas archivée avec des conditions pour les options signalement et suppression #}
+				<div class="col-md-12 col-black">
+					<div class="col-md-12 col-red">
+						<p><a class="auteur" href="{{ path('contenu', {'username': video.username.username }) }}">{{ video.username.username }}</a></p>
+						<h2 class="title">{{ video.titre }}</h2>
+					</div>
+
+					<div class="border">
+					<div class="cleaner"></div>
+					<p class="date">Ajouté le {{ video.date | date('d/m/Y') }}</p>
+					<div class="cleaner"></div>
+					<p class="article">{{ video.description }}</p>
+					<iframe width="560" height="315" src="{{ video.url }}" frameborder="0"  allowfullscreen></iframe>
+
+					{% if app.user and video.username != app.user %}
+					<a href="{{ path('videoflag', {'id': video.id }) }}"><p class="signalement">Signaler la publication</p></a>
+					{% endif %}
+
+					{% if app.user and  app.user.roles == ["ROLE_ADMIN"] %}
+					<a href="{{ path('videodeladmin', {'id': video.id }) }}"><p class="signalement">Supprimer</p></a>
+					{% endif %}
+					
+					<div class="cleaner"></div>
+				</div>
+
+				{# Affichage de la section commentaire et du formulaire pour les utilisateurs non bannis #}
+				{% if app.user and app.user.roles != ["ROLE_BANNI"]  %}
+					
+					{{ form_start(commentForm) }}
+					<div class="col-lg-12 col-white">
+						<div class="col-lg-2 col-xs-2 col-sm-2">
+							<p class="auteur">Mettez votre commentaire</p>
+						</div>
+
+						<div class="col-lg-8 col-xs-8 col-sm-8">
+							{{ form_row(commentForm.texte) | raw }}
+						</div>
+						<div class="col-lg-2 col-xs-2 col-sm-2">
+							<button type="submit" class="btn bottom-20">Envoyer</button>
+							
+							<div class="cleaner"></div>
+						</div>	
+					</div>
+					{{ form_end(commentForm) }}
+
+					{# Option si l'utilisateur est banni, remplacement du formulaire de commentaire #}
+					{% elseif app.user and app.user.roles == ["ROLE_BANNI"] %}
+						<div class="col-lg-12 col-white">
+							<p class="article comment"> Alors? ça fait quoi de pouvoir lire les commentaires sans pouvoir commenter? </p>
+						</div>
+
+
+					{% endif %}
+					
+					{% if app.user %}
+					{# Affichage de tous les commentaires pour tous les utilisateurs avec des conditions pour les options suppression, modification et signalement #}
+					{% for commentaire in video.commentaires | sort|reverse %}
+					{% if commentaire.del !=1 %}
+
+					<div class="col-lg-12 col-white">
+						<div class="col-lg-2 col-xs-2 col-sm-2">
+							<p class="auteur"><a href="{{ path('contenu', {'username': commentaire.username.username}) }}" class="auteur">{{ commentaire.username.username }}</a></p><br>
+								
+							<p class="date">Ajouté le {{ commentaire.date | date('d/m/Y') }}</p><br>
+						</div>
+
+						<div class="col-lg-8 col-xs-8 col-sm-8">
+							<p class="article comment">{{ commentaire.texte | raw }}</p>
+						</div>
+						<div class="col-lg-2 col-xs-2 col-sm-2">
+						{% if app.user and commentaire.username == app.user %}
+							<a href="{{ path('commenttext', {'id': commentaire.id }) }}"><p class="signalement">Modifier</p></a>
+							<a href="{{ path('commentdeladmin', {'id': commentaire.id }) }}"><p class="signalement">Supprimer</p></a>
+						{% endif %}
+
+						{% if app.user and app.user.roles == ["ROLE_ADMIN"] and commentaire.username != app.user %}
+						<a href="{{ path('commentdeladmin', {'id': commentaire.id }) }}"><p class="signalement">Supprimer</p></a>
+						{% endif %}
+
+						{% if app.user and commentaire.username != app.user %}
+							<a href="{{ path('commentflag', {'id': commentaire.id }) }}"><p class="signalement">Signaler</p></a>
+						{% endif %}
+						</div>
+					</div>
+
+					{% endif %}
+					{% endfor %}
+
+					{# Affichage si l'utilisateur n'est pas connecté #}
+					{% else %}
+					<div class="col-lg-12 col-white">
+					<p class="article comment">Pour accéder aux commentaires, inscrivez-vous, c'est gratuit :D et promis, on ne mange pas les gens!</p>
+					</div>
+
+					{% endif %}
+
+				</div>
+
+
+			</div> <!-- thumbnail area -->  
+		</div>
+
+		{% endblock %}

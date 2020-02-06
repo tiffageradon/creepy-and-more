@@ -1,0 +1,42 @@
+{% extends '/layout.html.twig' %}
+{% block content %}
+
+<div class="row" id="thumbnails_container">
+{# Affichage de la barre de recherche #}
+<div class="header">
+					{{ form(form) }}
+				</div>
+				<div class="cleaner"></div>
+
+				{# Affichage de tous les textes non-archivés par 5/page #}
+				{% for texte in textes | sort|reverse %}
+				{% if texte.del !=1 %}
+					
+				
+					
+				<div class="col-md-12 col-black">
+					<div class="col-md-12 col-red">
+						<p><a class="auteur" href="{{ path('contenu', {'username': texte.username.username}) }}">{{ texte.username.username }}</a></p>
+						<h2 class="title">{{ texte.titre }}</h2>
+					</div>
+
+					<div class="cleaner"></div>
+					<p class="date">Ajouté le {{ texte.date | date('d/m/Y') }}</p>
+					<div class="cleaner"></div>
+					<p class="article">{{ texte.description | raw }} <a class="red" href="{{ path('texttarget', {'id': texte.id}) }}">...Lire la suite</a>
+					</p>
+				</div>
+				<div class="cleaner"></div>
+
+				{% endif %}
+				{% endfor %}
+				
+				{# Pagination #}
+				<div class="col-xs-12 col-md-12">
+					<div class="article">
+					{{ knp_pagination_render(textes) }}
+					</div>
+				</div>
+</div> <!-- thumbnail area -->  
+		</div>
+{% endblock %}

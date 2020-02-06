@@ -1,0 +1,18 @@
+{% extends '/layout.html.twig' %}
+{% block content %}
+{# Erreur 403 si l'utilisateur tente d'accéder à un fichier ne lui appartenant pas ou une action qui lui est interdite #}
+<div class="row" id="thumbnails_container">            
+				<div class="col-md-12 col-black">
+					<h2>Erreur 403</h2>
+                    <p class="article">Il semble que vous n'avez pas accès à ce contenu ou à cette commande<br>
+                    {% if not app.user %}
+							<a class="red" href="{{ path('connexion') }}">Connexion</a><br>
+						{% else %}
+							<a class="red" href="{{ path('compteaccueil') }}">Compte</a><br>
+						{% endif %}
+                        <a class="red" href="{{ path('home') }}">Accueil</a>
+                        </p>
+
+                </div> <!-- thumbnail area -->  
+</div>
+{% endblock %}

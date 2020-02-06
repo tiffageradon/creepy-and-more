@@ -1,0 +1,54 @@
+{% extends '/layout.html.twig' %}
+{% block content %}
+
+{# Page d'accueil #}
+<div class="row" id="thumbnails_container">   
+         {# titre #}
+				<div class="col-md-12 col-black">
+					<h2>{{title}}</h2>
+					{# image d'accueil et texte d'explication + lien CGU #}
+					<img src="{{ asset('/assets/images/foret.jpg')}}" alt="foret">
+					<p class="article">Qu'est ce que ce site? <br>
+						Et bien tout simplement un site réunissant un grand nombre de creepypastas en format écrit ou en vidéo et où tout le monde pourra poster ses créations soit en texte soit en vidéo.<br><br>
+
+						Qu'est-ce qu'une creepypasta?<br>
+						Ce sont des histoires/témoignages horrifiques ou relevant du paranormal ou encore des légendes urbaines. Cela peut être des évènements irréels comme ils peuvent être aussi réels et concerner des lieux bien réels. <br><br>
+						
+						Conditions générales du site<br>
+						<a class="red" href="{{ path('cgu') }}">Lire les condition générales d'utilisation</a>
+					</p>
+				</div>
+				
+				{# Container contenant les dernières sorties de textes et vidéos #}
+				<div class="row">
+					<div class="col-xs-6 col-sm-6 col-lg-6 col-black col-border-right">
+						<h3>Nouveaux textes</h3>
+						
+						{# Affichage des 3 derniers textes #}
+						{% for texte in textes %}
+						<div class="new-article">
+							
+							<a href="{{ path('texttarget', {'id': texte.id}) }}" class="red creepy-name">{{ texte.titre }}</a><p>Par {{ texte.username.username }}</p>
+							<p class="article">{{ texte.description }}</p>
+						</div>
+						<div class="cleaner"></div>
+						{% endfor %}
+
+					</div>
+					<div class="col-xs-6 col-sm-6 col-lg-6 col-black col-border-left">
+						<h3>Nouvelles vidéos</h3>
+
+						{# Affichage des 3 dernières vidéos #}
+						{% for video in videos %}
+						<div class="new-article">
+							
+							<a href="{{ path('videotarget', {'id': video.id}) }}" class="red creepy-name">{{ video.titre }}</a><p>Par {{ video.username.username }}</p>
+							<p class="article">{{ video.description }}</p>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+				
+			</div> <!-- thumbnail area -->  
+		</div>
+        {% endblock %}

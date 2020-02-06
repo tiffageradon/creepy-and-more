@@ -1,0 +1,47 @@
+{% extends './adminlayout.html.twig' %}
+{% block content %}
+
+{# Gestion des vidéos #}
+
+<div class="row" id="thumbnails_container">
+
+	{# Affichage des vidéos signalées avec option de validation ou de suppression #}
+				{% for video in videos %}
+				{% if video.del !=1 and video.signalement ==1 %}
+				<div class="col-md-12 col-black">
+					<div class="col-md-12 col-red">
+						<p><a class="auteur" href="{{ path('contenu', {'username': video.username.username}) }}">{{ video.username.username }}</a></p>
+						<h2 class="title">{{ video.titre }}</h2>
+					</div>
+
+					<div class="cleaner"></div>
+
+					{% if video.signalement > 0 %}
+						<i class="fa fa-warning red right"></i>
+					{% endif %}
+
+					<p class="date">Ajouté le {{ video.date | date('d/m/Y') }}</p>
+					<div class="cleaner"></div>
+					<p class="article">{{ video.description }}</p>
+					<iframe width="560" height="315" src="{{ video.url }}" frameborder="0"  allowfullscreen></iframe>
+					<div class="cleaner"></div>
+					<button type="update" class="btn btn-primary btn-right"><a href="{{ path('videoflagadmin', {'id': video.id }) }}">Valider</a></button>
+					<button type="delete" class="btn btn-primary btn-right"><a href="{{ path('videodeladmin', {'id': video.id }) }}">Supprimer</a></button>
+				</div>
+				
+				{% endif %}
+				{% endfor %}
+				<div class="col-xs-12 col-md-12">
+				{# Pagination #}
+					<div class="article">
+					{{ knp_pagination_render(videos) }}
+					</div>
+				</div>
+
+			</div> <!-- thumbnail area -->  
+		</div>
+
+		
+
+
+{% endblock %}

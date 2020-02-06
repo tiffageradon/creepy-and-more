@@ -1,0 +1,45 @@
+{% extends './adminlayout.html.twig' %}
+{% block content %}
+
+{# Résultat de recherche de vidéos archivées #}
+
+<div class="row" id="thumbnails_container">
+
+{# Retour en arrière #}
+				<a class="white bottom" href="{{ path('archivesvideos') }}">Retour en arrière</a>
+				<div class="cleaner"></div>
+
+{# Affichage des vidéos ciblées par la recherche #}
+				{% for video in videos | sort|reverse %}
+				{% if video.del == 1 %}
+				<div class="col-md-12 col-black">
+					<div class="col-md-12 col-red">
+						<p><a class="auteur" href="{{ path('contenu', {'username': video.username.username}) }}">{{ video.username.username }}</a></p>
+						<h2 class="title">{{ video.titre }}</h2>
+					</div>
+
+					<div class="cleaner"></div>
+
+					{% if video.signalement > 0 %}
+						<i class="fa fa-warning red right"></i>
+					{% endif %}
+
+					<p class="date">Ajouté le {{ video.date | date('d/m/Y') }}</p>
+					<div class="cleaner"></div>
+					<p class="article">{{ video.description }}</p>
+					<iframe width="560" height="315" src="{{ video.url }}" frameborder="0"  allowfullscreen></iframe>
+					<div class="cleaner"></div>
+				</div>
+				
+				{% endif %}
+				{% endfor %}
+				
+				<div class="cleaner"></div>
+
+			</div> <!-- thumbnail area -->  
+		</div>
+
+		
+
+
+{% endblock %}

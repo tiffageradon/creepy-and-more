@@ -1,0 +1,36 @@
+{% extends '/layout.html.twig' %}
+{% block content %}
+
+<div class="row" id="thumbnails_container">
+{# retour à la page précédente (page vidéos) #}
+<div class="header">
+<a class="white bottom" href="{{ path('videos') }}">Retour en arrière</a>
+</div>
+<div class="cleaner"></div>
+
+{# Affichage des vidéos si elles ne sont pas dans les archives #}
+{% for video in videos %}
+{% if video.del == 0 %}
+    
+
+<div class="col-md-12 col-black">
+					<div class="col-md-12 col-red">
+						<p><a class="auteur" href="{{ path('contenu', {'username': video.username.username}) }}">{{ video.username.username }}</a></p>
+						<h2 class="title">{{ video.titre }}</h2>
+					</div>
+
+					<div class="cleaner"></div>
+					<p class="date">Ajouté le {{ video.date | date('d/m/Y') }}</p>
+					<div class="cleaner"></div>
+					<p class="article">{{ video.description | raw }} <a class="red" href="{{ path('videotarget', {'id': video.id}) }}">...Lire la suite</a>
+					</p>
+				</div>
+				<div class="cleaner"></div>
+                
+{% endif %}
+{% endfor %}
+
+				
+</div> <!-- thumbnail area -->  
+		</div>
+{% endblock %}

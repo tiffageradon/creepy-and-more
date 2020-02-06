@@ -1,0 +1,51 @@
+{% extends './adminlayout.html.twig' %}
+{% block content %}
+
+{# Gestion des textes #}
+
+<div class="row" id="thumbnails_container">
+
+{# Affichage des textes signalés avec option de suppression ou validation #}
+
+				{% for texte in textes %}
+				{% if texte.del !=1 and texte.signalement ==1 %}
+	
+				<div class="col-md-12 col-black">
+					<div class="col-md-12 col-red">
+						<p><a class="auteur" href="{{ path('contenu', {'username': texte.username.username}) }}">{{ texte.username.username }}</a></p>
+						<h2 class="title">{{ texte.titre }}</h2>
+					</div>
+
+					<div class="cleaner"></div>
+
+					{% if texte.signalement > 0 %}
+						<i class="fa fa-warning red right"></i>
+					{% endif %}
+					
+					<p class="date">Ajouté le {{ texte.date | date('d/m/Y') }}</p>
+					<div class="cleaner"></div>
+					{% if  texte.image != NULL %}
+						<img src="{{ img_folder }}/{{ texte.image }}" alt="">
+					{% endif %}
+					
+					<p class="article">{{ texte.texte }} 
+					</p>
+					<div class="cleaner"></div>
+					<button type="update" class="btn btn-primary btn-right"><a href="{{ path('textflagadmin', {'id': texte.id }) }}">Valider</a></button>
+					<button type="delete" class="btn btn-primary btn-right"><a href="{{ path('textdeladmin', {'id': texte.id }) }}">Supprimer</a></button>
+				</div>
+				
+				{% endif %}
+				{% endfor %}
+				<div class="col-xs-12 col-md-12">
+				{# Pagination #}
+					<div class="article">
+					{{ knp_pagination_render(textes) }}
+					</div>
+				</div>
+
+			</div> <!-- thumbnail area -->  
+		</div>
+
+
+{% endblock %}

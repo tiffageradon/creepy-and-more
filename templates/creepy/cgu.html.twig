@@ -1,0 +1,35 @@
+{% extends '/layout.html.twig' %}
+{% block content %}
+
+<div class="row" id="thumbnails_container"><a class="white" href="{{ path('registration') }}">Retour en arrière</a>
+				{# Div contenant les conditions d'utilisations et infos sur les admins #}
+				<div class="col-md-12 col-black">
+					<h2>{{title}}</h2>
+						<p class="article">Mon Dieu !? il y a vraiment des gens qui les lises ? <br><br>
+							On va faire en bref. <br><br>
+							1.	Creepy and More est un site de creepypastas. Le contenu peut choquer des gens.<br><br>
+							2.	Creepy and More n’est pas un site adapté pour les enfants. Certaines histoires peuvent choquer et, ce n’est pas parce que le contenu de certaines concernent un jeu que c’est pour les enfants. Creepy and More ou l’auteur (sauf en cas d’incitation de l’auteur) de l’article n’est pas responsable si un enfant est choqué par un contenu. Les parents sont responsables des enfants, n’oubliez pas de surveiller ce qu’ils font en ligne, certains contenus sont bien pires qu’ici.<br><br>
+							3.	Le contenu mis en ligne par les utilisateurs DOIT être en rapport avec les creepypastas, ne sont pas tolérées les pubs (sauf en cas de troll sur ce domaine), les chaînes (sauf celles en lien avec les creepypasta) et tout contenu sans rapport avec les creepypastas.<br><br>
+							4.	Les commentaires ou articles offensants, destinés à inciter à la haine ou insultants ne sont également pas tolérés et se verront supprimés du site et, mèneront à un ban de l’utilisateur dont la durée dépendra de la gravité et peuvent également conduire à un ban définitif du site. <br><br>
+							5.	Toute publication (commentaires, textes ou vidéos) supprimée est conservée dans les archives.<br><br>
+							6.	Creepy and More n’est pas responsable du contenu déposé par les membres. <br><br>
+							7.	Les membres inscrits ont des droits supplémentaires par rapport aux simples visiteurs non-membres comme : <br></p>
+								<ul><li class="article">L’accès aux commentaires.</li>
+								<li class="article">La possibilité de déposer des vidéos et/ou des textes sur le site.</li></ul><br>
+						<p class="article">
+							8.	Creepy and More vous demande de mettre « Offrons des chèvres en sacrifice à Chtuluh » sur le texte « l’ombre » de Nephilim (créatrice du site, cela permettra de voir qui a vraiment lu).<br><br>
+						
+						Liste des admins: <br>
+						{% for user in user %}
+							{% if user.roles == ["ROLE_ADMIN"] %}
+								<a class="red" href="{{ path('contenu', {'username': user.username}) }}">{{ user.username }}<a><br>
+							{% endif %}
+						{% endfor %}
+
+						</p>
+
+				
+					</div> <!-- thumbnail area -->  
+</div>
+
+{% endblock %}

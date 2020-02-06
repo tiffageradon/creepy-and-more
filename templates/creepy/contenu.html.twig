@@ -1,0 +1,61 @@
+{% extends '/layout.html.twig' %}
+{% block content %}
+
+<div class="row" id="thumbnails_container">
+				{# titre #}
+				<div class="col-md-12 col-black">
+					<h2>{{title}}</h2>
+				</div>
+
+					{# Partie textes de l'utilisateur #}
+					<div class="col-md-12 col-black">
+						<h3>Textes</h3>
+					</div>
+					{# Affichage des textes non archivés #}
+				{% for texte in textes | sort|reverse %}
+				{% if texte.del !=1 %}
+					
+				<div class="col-md-12 col-black">
+					<div class="col-md-12 col-red">
+						<p><a class="auteur" href="{{ path('contenu', {'username': texte.username.username}) }}">{{ texte.username.username }}</a></p>
+						<h2 class="title">{{ texte.titre }}</h2>
+					</div>
+
+					<div class="cleaner"></div>
+					<p class="date">Ajouté le {{ texte.date | date('d/m/Y') }}</p>
+					<div class="cleaner"></div>
+					<p class="article">{{ texte.description }} <a class="red" href="{{ path('texttarget', {'id': texte.id}) }}">...Lire la suite</a>
+					</p>
+				</div>
+				{% endif %}
+				{% endfor %}
+				
+				{# Partie vidéo #}
+					<div class="col-md-12 col-black">
+						<h3>Vidéos</h3>
+					</div>
+
+					{# affichage des vidéos de l'utilisateur non-archivées #}
+				{% for video in videos | sort|reverse %}
+				{% if video.del !=1 %}
+
+				<div class="col-md-12 col-black">
+					<div class="col-md-12 col-red">
+						<p><a class="auteur" href="{{ path('contenu', {'username': video.username.username}) }}">{{ video.username.username }}</a></p>
+						<h2 class="title">{{ video.titre }}</h2>
+					</div>
+
+					<div class="cleaner"></div>
+					<p class="date">Ajouté le {{ video.date | date('d/m/Y') }}</p>
+					<div class="cleaner"></div>
+					<p class="article">{{ video.description }} <a class="red" href="{{ path('videotarget', {'id': video.id}) }}">...Voir la vidéo</a></p>
+				</div>
+				{% endif %}
+				{% endfor %}
+
+				<div class="cleaner"></div>
+
+			</div> <!-- thumbnail area -->  
+		</div>
+
+{% endblock %}

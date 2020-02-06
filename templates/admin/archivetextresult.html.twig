@@ -1,0 +1,45 @@
+{% extends './adminlayout.html.twig' %}
+{% block content %}
+
+{# Recherche de textes archivés #}
+<div class="row" id="thumbnails_container">
+{# Retour dans tous les textes archivés #}
+<a class="white bottom" href="{{ path('archivestextes') }}">Retour en arrière</a>
+<div class="cleaner"></div>
+{# Affichage des textes ciblés par la recherche #}
+				{% for texte in textes | sort|reverse %}
+				{% if texte.del == 1 %}
+				
+				<div class="col-md-12 col-black">
+					<div class="col-md-12 col-red">
+						<p><a class="auteur" href="{{ path('contenu', {'username': texte.username.username}) }}">{{ texte.username.username }}</a></p>
+						<h2 class="title">{{ texte.titre }}</h2>
+					</div>
+
+					<div class="cleaner"></div>
+
+					{% if texte.signalement > 0 %}
+						<i class="fa fa-warning red right"></i>
+					{% endif %}
+					
+					<p class="date">Ajouté le {{ texte.date | date('d/m/Y') }}</p>
+					<div class="cleaner"></div>
+					{% if  texte.image != NULL %}
+						<img src="{{ img_folder }}/{{ texte.image }}" alt="">
+					{% endif %}
+					
+					<p class="article">{{ texte.texte }} 
+					</p>
+					<div class="cleaner"></div>
+				</div>
+				
+				{% endif %}
+				{% endfor %}
+				
+				<div class="cleaner"></div>
+
+			</div> <!-- thumbnail area -->  
+		</div>
+
+
+{% endblock %}

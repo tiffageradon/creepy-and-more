@@ -1,0 +1,38 @@
+{% extends './adminlayout.html.twig' %}
+{% block content %}
+
+{# Commentaires à gérer #}
+
+{# Affichage des commentaires signalés avec option de validation ou de suppression #}
+<div class="row" id="thumbnails_container">	
+{% for commentaire in commentaire %}	
+<div class="col-md-12 col-black">		
+				
+					
+					<div class="col-lg-12 col-white">
+					<div class="col-lg-8 col-xs-8 col-sm-8">
+							<p class="article comment">{{commentaire.texte}}</p>
+						</div>
+						<div class="col-lg-4 col-xs-4 col-sm-4">
+                        {% if commentaire.signalement > 0 %}
+						<i class="fa fa-warning red right"></i>
+					    {% endif %}
+                        <div class="cleaner"></div>
+                            <button type="button" class="btn btn-primary btn-right"><a href="{{ path('commentadmin', {'id': commentaire.id }) }}">Valider</a></button>
+							<button type="delete" class="btn btn-primary btn-right"><a href="{{ path('commentdeladmin', {'id': commentaire.id }) }}">Supprimer</a></button>
+						</div>
+					</div>
+					<div class="cleaner"></div>
+				
+					{% endfor %}
+					<div class="col-xs-12 col-md-12">
+					{# Pagination #}
+					<div class="article">
+					{{ knp_pagination_render(commentaire) }}
+					</div>
+				</div>
+			</div> <!-- thumbnail area -->  
+		</div>
+
+
+{% endblock %}

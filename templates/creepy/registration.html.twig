@@ -1,0 +1,45 @@
+{% extends '/layout.html.twig' %}
+{% block content %}
+
+{# Inscription #}
+<div class="row" id="thumbnails_container">
+		{# Si l'utilisateur est connecté #}
+		{% if app.user %}
+			<div class="col-md-12 col-black col-border-right">
+					<h3>Tu as déjà un compte</h3>
+
+					<p class="article">Même si le multicompte est amusant, commence par te déconnecter si tu veux en faire un nouveau gros beta !</p><br>
+					<a class="red" href="{{ path('compteaccueil') }}">Compte</a><br>
+
+			 </div> <!-- thumbnail area -->  		
+
+			{# Affichage du formulaire si l'utilisateur n'est pas connecté #}
+		{% else %}
+				
+				<div class="col-md-12 col-black col-border-right">
+					<h3>Créer un compte</h3>
+
+					{{ form_start(form) }}
+
+					{{ form_row(form.mail) }}
+
+					{{ form_row(form.username) }}
+
+					{{ form_row(form.password) }}
+
+					<a class="red" href="{{ path('cgu') }}">Lire les condition générales d'utilisation</a><br><br>
+					
+					<button type="submit" class="btn btn-primary">Envoyer</button>
+						<div class="cleaner"></div>
+						
+
+					{{ form_end(form) }}
+
+				</div>
+                </div> <!-- thumbnail area -->  
+
+				{% endif %}
+	</div>
+	
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends './adminlayout.html.twig' %}
+{% block content %}
+
+{# Résultat de recherche utilisateurs #}
+<div class="row" id="thumbnails_container">
+
+<a class="white bottom" href="{{ path('adminusers') }}">Retour en arrière</a>
+				<div class="cleaner"></div>
+{# Affichage des utilisateurs ciblés par la recherche #}
+                {% for user in user %}
+				
+				<div class="col-xs-6 col-sm-6 col-lg-6 col-black col-border-right">
+						<p class="article"> {{ user.username }}</p>
+
+						<div class="select-role">
+						<p class="article"> Changer le rôle : </p><br>
+                        <button type="button" class="btn btn-primary"><a href="{{ path('usermembre', {'id': user.id }) }}">Membre</a></button>
+						<button type="button" class="btn btn-primary"><a href="{{ path('userbanni', {'id': user.id }) }}">Banni</a></button>
+						<button type="button" class="btn btn-primary"><a href="{{ path('useradmin', {'id': user.id }) }}">Admin</a></button>
+					</div>
+				</div>
+                     {% endfor %}
+
+<div class="cleaner"></div>
+
+
+			</div> <!-- thumbnail area -->  
+		</div>
+
+
+{% endblock %}

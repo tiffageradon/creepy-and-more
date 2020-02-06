@@ -1,0 +1,35 @@
+{% extends '/layout.html.twig' %}
+{% block content %}
+
+<div class="row" id="thumbnails_container">
+
+				 {# Connexion #} 
+				<div class="col-md-12 col-black col-border-left">
+					<h3>Se connecter</h3>
+					
+					{# Affichage des erreurs #}
+					{% if error %}
+    				<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+					{% endif %}
+
+					{# Formulaire de connexion #}
+					<form action="{{ path('connexion') }}" method="post">
+						<label>Pseudo:</label>
+						<input type="text" class="form-control" placeholder="Pseudo" required name="_username" value="{{ last_username }}">
+
+						<label>Mot de passe:</label>
+						<input type="password" class="form-control" placeholder="Mot de passe" required name="_password">
+
+						<button type="submit" class="btn btn-primary success">Connexion</button>
+						<div class="cleaner"></div>
+
+						{# Lien vers l'inscription #}
+						<a class="white bottom-10" href="{{ path('registration') }}">Pas encore de compte?</a>
+					</form>
+				</div>
+			</div>
+			
+		</div> <!-- thumbnail area -->  
+	</div>
+
+{% endblock %}

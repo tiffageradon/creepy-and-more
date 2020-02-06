@@ -1,0 +1,44 @@
+{% extends '/layout.html.twig' %}
+{% block content %}
+
+{# Vidéos #}
+
+<div class="row" id="thumbnails_container">
+
+				{# Barre de recherche #}
+				<div class="header">
+					{{ form(form) }}
+				</div>
+				<div class="cleaner"></div>
+
+				{# Affichage des vidéos si elles ne sont pas archivées 5/page #}
+				{% for video in videos %}
+				
+				<div class="col-md-12 col-black">
+					<div class="col-md-12 col-red">
+						<p><a class="auteur" href="{{ path('contenu', {'username': video.username.username}) }}">{{ video.username.username }}</a></p>
+						<h2 class="title">{{ video.titre }}</h2>
+					</div>
+
+					
+					<div class="cleaner"></div>
+					<p class="date">Ajouté le {{ video.date | date('d/m/Y') }}</p>
+					<div class="cleaner"></div>
+					<p class="article">{{ video.description | raw }} <a class="red" href="{{ path('videotarget', {'id': video.id}) }}">...Voir la vidéo</a></p>
+				</div>
+
+				<div class="cleaner"></div>
+				{% endfor %}
+
+				<div class="col-xs-12 col-md-12">
+					{# Pagination #}
+					<div class="article">
+					{{ knp_pagination_render(videos) }}
+					</div>
+					
+				</div>
+
+			</div> <!-- thumbnail area -->  
+		</div>
+
+{% endblock %}

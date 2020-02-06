@@ -1,0 +1,134 @@
+{% extends './adminlayout.html.twig' %}
+{% block title %}{% endblock %}
+	
+
+{% block content %}
+
+{# Page d'accueil de l'admin #}
+
+{# Affichage des différents contenus #}
+<div class="row" id="thumbnails_container">            
+				<div class="col-md-12 col-black">
+					<h2>Bienvenue sur l'interface admin de Creepy and more</h2>
+				</div> 
+
+
+{# Affichage du nombre de mambres ainsi que les bannis et lien vers la section de gestion des utilisateurs #}
+				<div class="col-xs-6 col-sm-6 col-lg-6 col-black col-border-right">
+						<h3>Membres</h3>
+						<p class="article">Nombre de membres: {{ users | length }}<br>
+						Nombre de bannis:
+						{% set count = 0 %}
+						{% for users in users %}
+							{% if users.roles == ["ROLE_BANNI"] %}
+							{% set count = count + 1 %} 
+							{% endif %}
+							{% endfor %}
+							{% if count >0 %}
+								<span class="red">{{ count }}</span><br>
+							{% else %}
+								{{count}}<br>
+							{% endif %}
+							<a class="red" href="{{ path('adminusers') }}">Aller à la page</a></p>
+					</div>
+
+{# Affichage du nombre de textes sur le site (sans compter les archivés) et le nombre de texte signalés + lien vers la section de gestion des textes #}
+					<div class="col-xs-6 col-sm-6 col-lg-6 col-black col-border-left">
+						<h3>Textes</h3>
+						<p class="article">Nombre de textes: 
+						{% set count = 0 %}
+						{% for texte in textes %}
+							{% if texte.del !=1 %}
+							{% set count = count + 1 %} 
+							{% endif %}
+							{% endfor %}
+							{{count}}<br>
+						Signalements: 
+
+						{% set count = 0 %}
+						{% for textes in textes %}
+							{% if textes.signalement >0 %}
+							{% set count = count + 1 %} 
+							{% endif %}
+							{% endfor %}
+							{% if count >0 %}
+								<span class="red">{{ count }}</span><br>
+							{% else %}
+								{{count}}<br>
+							{% endif %}
+						
+						
+						
+						<a class="red" href="{{ path('admintextes') }}">Aller à la page</a></p>
+					</div>
+				
+ 			<div class="cleaner"></div>
+ 					<div class="row">
+
+{# Nombre de vidéos sur le site (sans les archivées) et nombre de vidéos signalées + lien vers la section de gestion des vidéos #}
+					<div class="col-xs-6 col-sm-6 col-lg-6 col-black col-border-right">
+						<h3>Vidéos</h3>
+						<p class="article">Nombre de vidéos: 
+						{% set count = 0 %}
+						{% for video in videos %}
+							{% if video.del !=1 %}
+							{% set count = count + 1 %} 
+							{% endif %}
+							{% endfor %}
+							{{count}}<br>
+						Signalements: 
+
+						{% set count = 0 %}
+						{% for videos in videos %}
+							{% if videos.signalement >0 %}
+							{% set count = count + 1 %} 
+							{% endif %}
+							{% endfor %}
+							{% if count >0 %}
+								<span class="red">{{ count }}</span><br>
+							{% else %}
+								{{count}}<br>
+							{% endif %}
+
+						<a class="red" href="{{ path('adminvideos') }}">Aller à la page</a></p>
+					</div>
+{# Nombre de commentaires sur le site (sans les archivés) et nombre de commentaires signalés + lien vers la gestion des commentaires #}
+					<div class="col-xs-6 col-sm-6 col-lg-6 col-black col-border-left">
+						<h3>Commentaires</h3>
+						<p class="article">Nombre de commentaires: 
+						{% set count = 0 %}
+						{% for commentaire in commentaire %}
+							{% if commentaire.del !=1 %}
+							{% set count = count + 1 %} 
+							{% endif %}
+							{% endfor %}
+							{{count}}<br>
+						Signalements: 
+
+						{% set count = 0 %}
+						{% for commentaire in commentaire %}
+							{% if commentaire.signalement >0 %}
+							{% set count = count + 1 %} 
+							{% endif %}
+							{% endfor %}
+							{% if count >0 %}
+								<span class="red">{{ count }}</span><br>
+							{% else %}
+								{{count}}<br>
+							{% endif %}
+
+						<a class="red" href="{{ path('admincomment') }}">Aller à la page</a></p>
+					</div>
+				</div>
+
+				<div class="cleaner"></div>
+{# Partie archives avec les liens #}
+				<div class="col-md-12 col-black">
+				<h3>Archives</h3>
+					<p class="article"><a class="red" href="{{ path('archivestextes') }}">Textes</a> <a class="red" href="{{ path('archivesvideos') }}">Vidéos</a> <a class="red" href="{{ path('archivescomment') }}">Commentaires</a></p>
+					</div>
+                
+			</div> <!-- thumbnail area -->  
+		</div>
+
+{% endblock %}

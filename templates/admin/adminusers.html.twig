@@ -1,0 +1,49 @@
+{% extends './adminlayout.html.twig' %}
+{% block content %}
+
+{# Gestion des utilisateurs #}
+
+<div class="row" id="thumbnails_container">
+
+{# Affichage de tous les utilisateurs. 
+Sigles pour déterminer les bannis : /!\ rouge. 
+Sigle pour déterminer les admin: /!\ vert. 
+Boutons de changement de rôle #}
+				<div class="header">
+					{{ form(form) }}
+				</div>
+				<div class="cleaner"></div>
+
+                {% for user in users %}
+				
+				<div class="col-xs-6 col-sm-6 col-lg-6 col-black col-border-right">
+						<p class="article"> {{ user.username }}</p>
+						{% if user.roles == ["ROLE_BANNI"] %}
+						<i class="fa fa-warning red right"></i>
+						{% elseif user.roles == ["ROLE_ADMIN"] %}
+						<i class="fa fa-warning green right"></i>
+					{% endif %}
+
+						<div class="select-role">
+						<p class="article"> Changer le rôle : </p><br>
+                        <button type="button" class="btn btn-primary"><a href="{{ path('usermembre', {'id': user.id }) }}">Membre</a></button>
+						<button type="button" class="btn btn-primary"><a href="{{ path('userbanni', {'id': user.id }) }}">Banni</a></button>
+						<button type="button" class="btn btn-primary"><a href="{{ path('useradmin', {'id': user.id }) }}">Admin</a></button>
+					</div>
+				</div>
+                     {% endfor %}
+
+<div class="cleaner"></div>
+
+				<div class="col-xs-12 col-md-12">
+				{# Pagination #}
+                	<div class="article">
+					{{ knp_pagination_render(users) }}
+					</div>
+			  	</div>
+
+			</div> <!-- thumbnail area -->  
+		</div>
+
+
+{% endblock %}

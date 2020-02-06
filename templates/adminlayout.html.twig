@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+
+{# Layout pour la partie admin #}
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+	<meta name="viewport" content="width=device-width" />
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="{{ asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
+	<!-- Custom styles for this template -->
+	<link href="{{ asset('assets/css/justified-nav.css')}}" rel="stylesheet" type="text/css">
+	<link href="{{ asset('assets/css/templatemo_style.css')}}" rel="stylesheet" type="text/css">
+	<link href="{{ asset('https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap')}}" rel="stylesheet"> 
+	<link href="{{ asset('https://fonts.googleapis.com/css?family=Neucha&display=swap')}}" rel="stylesheet">
+	<link rel="stylesheet" href="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')}}">
+    {% endblock %}
+
+    {% block body %}
+
+	{# Titre différent selon l'utilisateur #}
+    <div class="wrapper">
+		<h1>
+			Creepy and more {% if app.user and app.user.roles == ["ROLE_ADMIN"] %}admin {% endif %}
+		</h1>
+	</div>
+
+	{# si rôle admin, le contenu apparaît #}
+	{% if app.user and app.user.roles == ["ROLE_ADMIN"] %}
+	
+	{# Container de la navigation #}
+	<div id="main_container">
+		<div class="container" id="home">
+			<div class="navbar templatemo-nav" id="navbar">
+				<div class="navbar-header">		          	
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav nav-justified">
+						<li><a href="{{ path('admin')}}">Accueil</a></li>
+						<li><a href="{{ path('admintextes') }}">Textes</a></li>
+						<li><a href="{{ path('adminvideos') }}">Vidéos</a></li>
+						<li><a href="{{ path('adminusers') }}">Utilisateurs</a></li>
+						<li><a href="{{ path('admincomment') }}">Commentaires</a></li>
+						<li><a href="{{ path('home') }}">Site principal</a></li>
+					</ul>
+				</div> <!-- nav -->
+			</div>
+
+             {% block content %}
+        {% endblock %}
+{# footer #}
+        <footer class="container">
+			<div class="credit row">
+				<div class="col-md-6 col-md-offset-3">
+					<div id="templatemo_footer">
+						Copyright © 2019-2020 Tiffanie Géradon
+					</div>
+				</div>				
+			</div>
+		</footer>
+	</div>
+
+{# Si l'utilisateur n'est pas admin ou pas connecté avec changement de lien suivant le cas #}
+		{% else %}
+<div class="row" id="thumbnails_container">            
+    <div class="col-md-12 col-black">
+        <h2>Hey, il y a un problème</h2> 
+        <p class="article">Il semble que vous n'avez pas accès à cette page</p>
+        {% if app.user %}
+
+		<p class="article">Vous n'êtes pas admin. <a class="white" href="{{ path('home') }}">Retourner sur la page d'accueil</a></p>
+			
+		{% else %}
+			
+        <a class="white" href="{{ path('connexion') }}">Se connecter</a>
+		
+		{% endif %}
+    </div> <!-- thumbnail area -->  
+</div>
+{% endif %}
+        {% endblock %}
+
+       
+
+        {% block javascripts %}
+			<script type="text/javascript" src="{{ asset('assets/js/jquery.js')}}"></script>
+			<script type="text/javascript" src="{{ asset('assets/js/bootstrap.min.js')}}"></script>
+			<script type="text/javascript" src="{{ asset('assets/js/templatemo_script.js')}}"></script>
+        {% endblock %}
+
+	
